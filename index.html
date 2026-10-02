@@ -1763,8 +1763,10 @@
 
 /* hero + about artwork: drop the old navy box, blend into the glass backdrop */
 .hero-fade-left,.hero-fade-bottom,.about-fade-top,.about-fade-bottom,.about-fade-right,.gallery-carousel::before,.gallery-carousel::after{display:none!important}
-.hero-bg-img,.about-bg-img{filter:hue-rotate(165deg) saturate(.6) brightness(1.08);opacity:.92;
-  -webkit-mask-image:radial-gradient(ellipse 62% 66% at 55% 50%,#000 38%,transparent 78%);mask-image:radial-gradient(ellipse 62% 66% at 55% 50%,#000 38%,transparent 78%)}
+.hero-bg-img{-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 46%),linear-gradient(to bottom,#000 70%,transparent 100%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0%,#000 46%),linear-gradient(to bottom,#000 70%,transparent 100%);mask-composite:intersect}
+.about-bg-img{-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 80%,transparent 100%),linear-gradient(to right,#000 68%,transparent 100%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 80%,transparent 100%),linear-gradient(to right,#000 68%,transparent 100%);mask-composite:intersect}
 .gallery-carousel{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
 
 /* sections go transparent so the light shows through */
@@ -2021,7 +2023,7 @@
             <div class="cam-header">
                 <span class="section-tag">EVENT CAM</span>
                 <h2 class="section-title">Strike a Pose, Take It Home</h2>
-                <p class="section-desc">Snap a square photo, get it framed as a polaroid, and download your whole roll as a zip.</p>
+                <p class="section-desc">Snap a square photo, get it framed as a polaroid, then upload it to the gallery or download it.</p>
             </div>
             <div class="cam-grid">
                 <div class="cam-stage">
@@ -2045,7 +2047,6 @@
                     </div>
                     <div class="cam-thumbs" id="cam-thumbs"></div>
                     <div class="cam-actions">
-                        <button class="cam-btn" id="cam-zip" disabled>EXPORT .ZIP (<span id="cam-count">0</span>)</button>
                         <button class="cam-btn ghost" id="cam-clear" disabled>CLEAR</button>
                     </div>
                 </div>
@@ -2574,7 +2575,6 @@
             });
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
     /* ===== GATE ===== */
     (() => {
@@ -2665,11 +2665,11 @@
     /* ===== EVENT CAM ===== */
     (() => {
         // ImageKit: fill these in. Upload needs a signature from a server (see api/imagekit-auth.js).
-        const IK = { publicKey: 'public_1CEP7P3RP0iEo/TQEt2gg+8OXTc=', authEndpoint: '/api/imagekit-auth', listEndpoint: '/api/imagekit-list', folder: '/spectrum-event-cam' };
+        const IK = { publicKey: '', authEndpoint: '/api/imagekit-auth', listEndpoint: '/api/imagekit-list', folder: '/spectrum-event-cam' };
         const $ = id => document.getElementById(id);
         const video = $('cam-video'), idle = $('cam-idle'), flash = $('cam-flash'), status = $('cam-status'),
-            bStart = $('cam-start'), bShot = $('cam-shutter'), bFlip = $('cam-flip'), bZip = $('cam-zip'), bClear = $('cam-clear'),
-            bUp = $('cam-up'), bDl = $('cam-dl'), latest = $('cam-latest'), thumbs = $('cam-thumbs'), count = $('cam-count');
+            bStart = $('cam-start'), bShot = $('cam-shutter'), bFlip = $('cam-flip'), bClear = $('cam-clear'),
+            bUp = $('cam-up'), bDl = $('cam-dl'), latest = $('cam-latest'), thumbs = $('cam-thumbs');
         let stream = null, facing = 'user', shots = [], current = null;
         const say = m => status.textContent = m;
 
@@ -2708,7 +2708,7 @@
             try { await document.fonts.load('110px Caveat'); await document.fonts.load('28px Manrope'); } catch (e) { }
             const blob = await new Promise(r => polaroid(p).toBlob(r, 'image/jpeg', .92));
             const shot = { blob, name: `spectrum-${String(shots.length + 1).padStart(2, '0')}.jpg`, url: URL.createObjectURL(blob) };
-            shots.push(shot); show(shot); thumb(shot); count.textContent = shots.length; bZip.disabled = bClear.disabled = false;
+            shots.push(shot); show(shot); thumb(shot); bClear.disabled = false;
             say('Photo ready. Upload it to the gallery or download it.');
         }
         bShot.onclick = capture;
@@ -2753,16 +2753,10 @@
         };
         window.loadCamGallery(); setInterval(window.loadCamGallery, 45000);
 
-        bZip.onclick = async () => {
-            if (!window.JSZip) { say('Zip library did not load. Check your connection and retry.'); return; }
-            const z = new JSZip(); shots.forEach(s => z.file(s.name, s.blob));
-            const a = document.createElement('a'); a.href = URL.createObjectURL(await z.generateAsync({ type: 'blob' }));
-            a.download = 'spectrum-event-cam.zip'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-        };
         bClear.onclick = () => {
             shots.forEach(s => URL.revokeObjectURL(s.url)); shots = []; thumbs.innerHTML = '';
             latest.classList.remove('has'); latest.innerHTML = '<span>Your polaroid appears here</span>';
-            count.textContent = 0; bZip.disabled = bClear.disabled = true; say('');
+            bClear.disabled = true; bUp.disabled = bDl.disabled = true; current = null; say('');
         };
     })();
     </script>
