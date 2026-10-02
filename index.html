@@ -1,0 +1,2773 @@
+<!DOCTYPE html>
+<html lang="en" class="locked">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPECTRUM - Where Physics Meets Culture</title>
+    <meta name="description"
+        content="SPECTRUM - An interdisciplinary event celebrating ideas, innovation, and tradition.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,300&family=Manrope:wght@300;400;500;600;800&family=Space+Mono&family=Caveat:wght@600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ─────────────────────────────────────────────
+   COUNTDOWN TARGET — change only these values
+   ───────────────────────────────────────────── */
+        :root {
+            --event-year: 2026;
+            --event-month: 10;
+            /* 1=Jan … 6=Jun … 12=Dec */
+            --event-day: 26;
+            --event-hour: 18;
+            /* 24-h; 18 = 6 PM */
+            --event-minute: 0;
+            --event-second: 0;
+            /* timezone offset in hours (+5.5 for IST) */
+            --event-tz-offset: 5.5;
+        }
+
+        :root {
+            --bg-primary: #06070f;
+            --bg-secondary: rgba(255,255,255,.04);
+            --bg-card: rgba(255,255,255,.06);
+            --border-color: rgba(196, 214, 255, 0.2);
+            --border-hover: rgba(196, 214, 255, 0.5);
+            --accent-gold: #d9e6ff;
+            --accent-gold-rgb: 217, 230, 255;
+            --text-gold-light: #eef3ff;
+            --text-bronze: #b8c3e0;
+            --text-primary: #f0f4fa;
+            --text-muted: #8b9bb4;
+            --font-heading: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --glow-shadow: 0 0 20px rgba(196, 214, 255, 0.15);
+            --glow-shadow-strong: 0 0 35px rgba(196, 214, 255, 0.3);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Hide scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        html {
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .stars-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 40px 70px, rgba(255, 255, 255, .7), transparent),
+                radial-gradient(1px 1px at 150px 120px, #fff, transparent),
+                radial-gradient(2px 2px at 220px 200px, rgba(196, 214, 255, .6), transparent),
+                radial-gradient(1px 1px at 300px 80px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 350px 280px, rgba(255, 255, 255, .8), transparent),
+                radial-gradient(2px 2px at 450px 400px, rgba(196, 214, 255, .4), transparent),
+                radial-gradient(1px 1px at 500px 150px, #fff, transparent),
+                radial-gradient(1px 1px at 700px 320px, rgba(255, 255, 255, .5), transparent),
+                radial-gradient(2.5px 2.5px at 850px 220px, rgba(196, 214, 255, .7), transparent),
+                radial-gradient(1.5px 1.5px at 950px 480px, #fff, transparent),
+                radial-gradient(1px 1px at 1100px 100px, rgba(255, 255, 255, .4), transparent),
+                radial-gradient(2px 2px at 1250px 350px, rgba(196, 214, 255, .5), transparent),
+                radial-gradient(1px 1px at 1400px 90px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 1550px 600px, rgba(255, 255, 255, .8), transparent);
+            background-size: 1600px 800px;
+            opacity: 0.4;
+            animation: slow-pan 120s linear infinite;
+            will-change: background-position;
+            transform: translateZ(0);
+        }
+
+        @keyframes slow-pan {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 1600px 800px;
+            }
+        }
+
+        .celestial-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .celestial-grid::before {
+            content: '';
+            position: absolute;
+            top: -10vw;
+            right: -10vw;
+            width: 70vw;
+            height: 70vw;
+            border-radius: 50%;
+            border: 1px dashed rgba(196, 214, 255, .08);
+            pointer-events: none;
+        }
+
+        .celestial-grid::after {
+            content: '';
+            position: absolute;
+            top: -15vw;
+            right: -15vw;
+            width: 80vw;
+            height: 80vw;
+            border-radius: 50%;
+            border: 1px solid rgba(196, 214, 255, .04);
+            pointer-events: none;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 35%;
+            left: -15%;
+            width: 50vw;
+            height: 50vw;
+            border-radius: 50%;
+            border: 1px dashed rgba(196, 214, 255, .05);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: 5%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            border: 1px dashed rgba(196, 214, 255, .06);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ── Navbar (desktop) ── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(2, 7, 18, .8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(196, 214, 255, .08);
+            padding: 1.2rem 0;
+            transition: var(--transition-smooth);
+        }
+
+        .navbar-scrolled {
+            padding: 0.8rem 0;
+            background: rgba(2, 7, 18, .95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, .5);
+        }
+
+        .navbar-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            text-shadow: 0 0 10px rgba(255, 255, 255, .1);
+        }
+
+        .logo:hover {
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px rgba(196, 214, 255, .4);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: 0.3rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--accent-gold);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-gold);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-register-btn {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.75rem 1.6rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            background: transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-register-btn:hover {
+            color: var(--bg-primary);
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            box-shadow: var(--glow-shadow);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile hamburger - hidden on desktop */
+        .hamburger {
+            display: none;
+            z-index: 1001;
+        }
+
+        /* ── Mobile Drawer ── */
+        .mobile-drawer {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 75%;
+            max-width: 320px;
+            height: 100vh;
+            background: rgba(2, 7, 18, .98);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(196, 214, 255, .15);
+            z-index: 2000;
+            flex-direction: column;
+            padding: 5rem 2.5rem 3rem;
+            gap: 0;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-drawer.open {
+            right: 0;
+        }
+
+        .mobile-drawer-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1999;
+            background: rgba(0, 0, 0, .5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .mobile-drawer-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .drawer-nav-link {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(196, 214, 255, .08);
+            transition: var(--transition-smooth);
+            display: block;
+        }
+
+        .drawer-nav-link:hover {
+            color: var(--accent-gold);
+            padding-left: 0.5rem;
+        }
+
+        .drawer-register-btn {
+            margin-top: 2.5rem;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 1rem 1.6rem;
+            border: 1px solid var(--accent-gold);
+            border-radius: 50px;
+            background: transparent;
+            text-align: center;
+            transition: var(--transition-smooth);
+            display: block;
+        }
+
+        .drawer-register-btn:hover {
+            color: var(--bg-primary);
+            background: var(--accent-gold);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            padding: 8rem 0 4rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .invite-tag {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--text-gold-light);
+            line-height: 1.1;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, .8);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            color: var(--text-bronze);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .hero-desc {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin-bottom: 3.5rem;
+            line-height: 1.7;
+        }
+
+        .countdown {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 3.5rem;
+            max-width: 450px;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .time-box {
+            width: 100%;
+            padding: 1.2rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: rgba(8, 17, 36, .4);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.6rem;
+            transition: var(--transition-smooth);
+        }
+
+        .countdown-item:hover .time-box {
+            border-color: var(--border-hover);
+            box-shadow: var(--glow-shadow);
+            background: rgba(8, 17, 36, .7);
+        }
+
+        .time-box span {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .countdown-item .label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+        }
+
+        .countdown-divider {
+            width: 1px;
+            height: 50px;
+            background: rgba(196, 214, 255, .15);
+        }
+
+        .btn-register-hero {
+            align-self: flex-start;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 1.1rem 2.2rem;
+            border: 1px solid var(--accent-gold);
+            background: transparent;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-register-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .btn-register-hero:hover {
+            color: var(--bg-primary);
+            box-shadow: var(--glow-shadow-strong);
+            transform: translateY(-2px);
+        }
+
+        .btn-register-hero:hover::before {
+            left: 0;
+        }
+
+        .btn-register-hero .arrow,
+        .btn-learn-more .arrow {
+            transition: var(--transition-smooth);
+        }
+
+        .btn-register-hero:hover .arrow,
+        .btn-learn-more:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* Mobile "REGISTER NOW" pill style */
+        .btn-register-hero-pill {
+            display: none;
+            align-self: stretch;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold);
+            text-decoration: none;
+            padding: 1.1rem 2.2rem;
+            border: 1px solid var(--accent-gold);
+            border-radius: 50px;
+            background: transparent;
+            transition: var(--transition-smooth);
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            text-align: center;
+        }
+
+        .btn-register-hero-pill:hover {
+            color: var(--bg-primary);
+            background: var(--accent-gold);
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 2rem;
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+        }
+
+        .scroll-hint svg {
+            animation: scroll-bounce 2s ease-in-out infinite;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        @keyframes scroll-bounce {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(0, 6px, 0);
+            }
+        }
+
+        .hero-bg-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-bg-img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center right;
+        }
+
+        .hero-fade-left {
+            position: absolute;
+            top: 0;
+            left: 40%;
+            width: 20%;
+            height: 100%;
+            background: linear-gradient(to right, var(--bg-primary) 0%, transparent 100%);
+            z-index: 2;
+        }
+
+        .hero-fade-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35%;
+            background: linear-gradient(to bottom, transparent 0%, var(--bg-primary) 100%);
+            z-index: 3;
+        }
+
+        .hero-spacer {
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* ── About ── */
+        .about {
+            min-height: 100vh;
+            padding: 8rem 0 4rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            border-top: 1px solid rgba(196, 214, 255, .05);
+        }
+
+        .about-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .about-spacer {
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .about-bg-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .about-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center left;
+            opacity: 0.85;
+        }
+
+        .about-fade-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 25%;
+            background: linear-gradient(to bottom, var(--bg-primary) 0%, transparent 100%);
+            z-index: 2;
+        }
+
+        .about-fade-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 25%;
+            background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
+            z-index: 2;
+        }
+
+        .about-fade-right {
+            position: absolute;
+            top: 0;
+            left: 45%;
+            width: 15%;
+            height: 100%;
+            background: linear-gradient(to right, transparent 0%, var(--bg-primary) 100%);
+            z-index: 2;
+        }
+
+        .about-right {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-tag {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--accent-gold);
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--text-gold-light);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-desc {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .btn-learn-more {
+            align-self: flex-start;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.9rem 2rem;
+            border: 1px solid var(--accent-gold);
+            background: transparent;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-learn-more:hover {
+            color: var(--bg-primary);
+            background: var(--accent-gold);
+            box-shadow: var(--glow-shadow);
+            transform: translateY(-2px);
+        }
+
+        /* ── Gallery ── */
+        .gallery-section {
+            padding: 2rem 0;
+            border-top: none;
+            background: rgba(3, 8, 19, .3);
+        }
+
+        .gallery-section-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 3rem;
+        }
+
+        .gallery-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .gallery-header .section-tag {
+            margin-bottom: 0;
+        }
+
+        .gallery-header .section-title {
+            margin-bottom: 0;
+        }
+
+        .gallery-carousel {
+            overflow: hidden;
+            position: relative;
+            overflow-x: clip;
+            width: 100%;
+        }
+
+        .gallery-carousel::before,
+        .gallery-carousel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 120px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .gallery-carousel::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(3, 8, 19, 1) 0%, transparent 100%);
+        }
+
+        .gallery-carousel::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(3, 8, 19, 1) 0%, transparent 100%);
+        }
+
+        .gallery-track {
+            display: flex;
+            gap: 1.2rem;
+            width: max-content;
+            animation: scroll-left 45s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .gallery-track.scroll-right {
+            animation: scroll-right 45s linear infinite;
+        }
+
+        .gallery-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            flex: 0 0 380px;
+            min-width: 380px;
+            height: 220px;
+            border: 1px solid rgba(196, 214, 255, .15);
+            background: var(--bg-secondary);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            display: block;
+        }
+
+        .gallery-card .gallery-img-wrap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .gallery-card .gallery-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition-smooth);
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-gold);
+            box-shadow: var(--glow-shadow-strong);
+        }
+
+        .gallery-card:hover .gallery-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        @keyframes scroll-left {
+            from {
+                transform: translate3d(0, 0, 0);
+            }
+
+            to {
+                transform: translate3d(-50%, 0, 0);
+            }
+        }
+
+        @keyframes scroll-right {
+            from {
+                transform: translate3d(-50%, 0, 0);
+            }
+
+            to {
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* ── Lightbox ── */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, .85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            animation: lb-fade-in 0.25s ease-out;
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        @keyframes lb-fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .lightbox-modal {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(196, 214, 255, .3);
+            box-shadow: 0 0 60px rgba(0, 0, 0, .8), 0 0 30px rgba(196, 214, 255, .08);
+            max-width: 90vw;
+            max-height: 85vh;
+            animation: lb-scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: #01040b;
+        }
+
+        @keyframes lb-scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.88);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .lightbox-modal img {
+            display: block;
+            max-width: 90vw;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(2, 7, 18, .85);
+            border: 1px solid rgba(196, 214, 255, .3);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            line-height: 1;
+            transition: var(--transition-smooth);
+            z-index: 10;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(196, 214, 255, .15);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        /* ── What to Expect ── */
+        .expectations-section {
+            padding: 8rem 0 6rem;
+            background: rgba(3, 8, 19, .35);
+            border-top: 1px solid rgba(196, 214, 255, .05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expectations-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vw;
+            border-radius: 50%;
+            border: 1px dashed rgba(196, 214, 255, .06);
+            pointer-events: none;
+        }
+
+        .expectations-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .expectations-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .expectations-left .section-title {
+            font-size: 3rem;
+            margin-bottom: 0;
+        }
+
+        .expectations-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .expect-item {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(196, 214, 255, .25);
+            transition: var(--transition-smooth);
+        }
+
+        .expect-item:first-child {
+            border-top: 1px solid rgba(196, 214, 255, .25);
+        }
+
+        .expect-item:hover .expect-name {
+            color: var(--accent-gold);
+        }
+
+        .expect-number {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            color: rgba(196, 214, 255, .4);
+            letter-spacing: 0.1em;
+            min-width: 2rem;
+        }
+
+        .expect-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(196, 214, 255, .07);
+            border: 1px solid rgba(196, 214, 255, .2);
+            display: grid;
+            place-items: center;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .expect-item:hover .expect-icon {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px rgba(196, 214, 255, .3);
+        }
+
+        .expect-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+        }
+
+        .expect-name {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-gold-light);
+            letter-spacing: 0.04em;
+            transition: var(--transition-smooth);
+        }
+
+        /* ── Footer ── */
+        .footer {
+            border-top: 1px solid rgba(196, 214, 255, .1);
+            background: #01040b;
+            padding: 6rem 0 2rem;
+            position: relative;
+        }
+
+        .footer-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 0.9fr;
+            gap: 5rem;
+            margin-bottom: 5rem;
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-tag {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .footer-about .footer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .emblem-box {
+            width: 36px;
+            height: 36px;
+            color: var(--accent-gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .emblem-icon {
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer-about .footer-tag {
+            margin-bottom: 0;
+        }
+
+        .footer-desc {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 2.2rem;
+            max-width: 320px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .social-links a {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .social-links a svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
+            box-shadow: var(--glow-shadow);
+        }
+
+        .details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .detail-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+        }
+
+        .detail-item a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .detail-item a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(196, 214, 255, .05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: rgba(139, 155, 180, .6);
+        }
+
+        /* ── Scroll Animations ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .delay-4 {
+            transition-delay: 0.4s;
+        }
+
+        /* ══════════════════════════════════════════
+   MOBILE  (≤ 768px) — matches the mockup
+   ══════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+
+            /* ── Mobile Navbar ── */
+            .navbar {
+                padding: 1rem 0;
+                background: rgba(2, 7, 18, 0.55);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-bottom: 1px solid rgba(196, 214, 255, 0.12);
+            }
+
+            .navbar-container {
+                width: 92%;
+                flex-direction: row;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            /* hidden — use drawer */
+            .nav-register-btn {
+                display: none;
+            }
+
+            /* Hamburger */
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                width: 44px;
+                height: 44px;
+                cursor: pointer;
+                border: none;
+                background: rgba(2, 7, 18, 0.25);
+                padding: 0;
+                border-radius: 8px;
+                border: 1px solid rgba(196, 214, 255, .2);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+
+            .hamburger span {
+                display: block;
+                width: 22px;
+                height: 1.5px;
+                background: var(--accent-gold);
+                border-radius: 2px;
+                transition: var(--transition-smooth);
+            }
+
+            .hamburger.open span:nth-child(1) {
+                transform: translateY(6.5px) rotate(45deg);
+            }
+
+            .hamburger.open span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open span:nth-child(3) {
+                transform: translateY(-6.5px) rotate(-45deg);
+            }
+
+            /* Show drawer on mobile */
+            .mobile-drawer {
+                display: flex;
+            }
+
+            .mobile-drawer-overlay {
+                display: block;
+            }
+
+            /* ── Mobile Hero ── */
+            .hero {
+                min-height: 100svh;
+                padding: 0;
+                align-items: flex-end;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 0;
+                width: 100%;
+                max-width: 100%;
+                padding: 0 6% 3rem;
+                position: relative;
+                z-index: 10;
+                padding-top: 42vh;
+                /* push content below the artwork */
+            }
+
+            /* Full-bleed illustration behind everything */
+            .hero-bg-img {
+                width: 100%;
+                height: 85%;
+                top: 0;
+                right: 0;
+                object-position: center top;
+            }
+
+            .hero-fade-left {
+                left: 0;
+                width: 100%;
+                background: linear-gradient(to bottom,
+                        transparent 0%,
+                        rgba(2, 7, 18, .5) 45%,
+                        var(--bg-primary) 75%);
+            }
+
+            .hero-fade-bottom {
+                display: none;
+            }
+
+            .hero-spacer {
+                display: none;
+            }
+
+            .invite-tag {
+                font-size: 0.7rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .hero-title {
+                font-size: 3.2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.78rem;
+                letter-spacing: 0.16em;
+                margin-bottom: 1rem;
+            }
+
+            .hero-desc {
+                font-size: 0.92rem;
+                margin-bottom: 2rem;
+                max-width: 100%;
+            }
+
+            /* Countdown — 4 equal boxes in a row */
+            .countdown {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+                max-width: 100%;
+                margin-bottom: 1.8rem;
+            }
+
+            .countdown-divider {
+                display: none;
+            }
+
+            .time-box {
+                padding: 0.9rem 0;
+                border-radius: 6px;
+            }
+
+            .time-box span {
+                font-size: 1.6rem;
+            }
+
+            .countdown-item .label {
+                font-size: 0.58rem;
+            }
+
+            /* Hide the rectangular "WATCH TRAILER" button; show pill instead */
+            .btn-register-hero {
+                display: none;
+            }
+
+            .btn-register-hero-pill {
+                display: flex;
+            }
+
+            /* Show scroll hint */
+            .scroll-hint {
+                display: flex;
+            }
+
+            /* ── Mobile About ── */
+            /* Increase height by ~30% on mobile so content is more prominent */
+            .about {
+                padding: 5.5rem 0 3.3rem;
+                min-height: 65vh;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                width: 92%;
+                max-width: 100%;
+            }
+
+            .about-spacer {
+                display: none;
+            }
+
+            .about-bg-img {
+                width: 100%;
+                opacity: 0.5;
+                object-position: center;
+            }
+
+            .about-fade-right {
+                display: none;
+            }
+
+            /* ── Mobile Gallery ── */
+            .gallery-section {
+                padding: 1.5rem 0;
+            }
+
+            .gallery-section-container {
+                width: 92%;
+            }
+
+            .gallery-carousel::before,
+            .gallery-carousel::after {
+                width: 40px;
+            }
+
+            .gallery-card {
+                flex: 0 0 280px;
+                min-width: 280px;
+                height: 170px;
+            }
+
+            /* Reduce animation performance impact on mobile */
+            .gallery-track {
+                animation-duration: 50s;
+            }
+
+            .stars-overlay {
+                animation: none;
+                opacity: 0.2;
+            }
+
+            /* ── Mobile Expectations ── */
+            .expectations-section {
+                padding: 5rem 0 4rem;
+            }
+
+            .expectations-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                width: 92%;
+            }
+
+            .expectations-left .section-title {
+                font-size: 2rem;
+            }
+
+            .expect-item {
+                gap: 1.2rem;
+                padding: 1.5rem 0;
+            }
+
+            .expect-name {
+                font-size: 1rem;
+            }
+
+            /* ── Mobile Footer ── */
+            .footer {
+                padding: 4rem 0 2rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                width: 92%;
+                margin-bottom: 3rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                width: 92%;
+            }
+        }
+
+        /* Tablet (769–1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            html {
+                font-size: 15px;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .hero-bg-img {
+                width: 100%;
+                object-position: center;
+            }
+
+            .hero-fade-left {
+                left: 0;
+                width: 100%;
+                background: rgba(2, 7, 18, .75);
+            }
+
+            .hero-spacer {
+                display: none;
+            }
+
+            .hero-content {
+                align-items: center;
+            }
+
+            .hero-desc {
+                max-width: 100%;
+            }
+
+            .btn-register-hero {
+                align-self: center;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .about-bg-img {
+                width: 100%;
+                object-position: center;
+            }
+
+            .about-fade-right {
+                left: 0;
+                width: 100%;
+                background: rgba(2, 7, 18, .80);
+            }
+
+            .about-spacer {
+                display: none;
+            }
+
+            .expectations-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+
+            .footer-col:first-child {
+                grid-column: span 2;
+            }
+        }
+
+        /* ===== GATE (intro) ===== */
+        html.locked,html.locked body{overflow:hidden;height:100%}
+        #site{opacity:0}#site.entered{opacity:1}
+        #site.zoom-in{animation:szoom 1.7s cubic-bezier(.16,1,.3,1) both}
+        @keyframes szoom{from{transform:scale(.72);opacity:0;filter:blur(12px)}to{transform:none;opacity:1;filter:none}}
+        #gate{position:fixed;inset:0;z-index:9999;background:#05060c;color:#fff;overflow:hidden;font-family:'Space Mono','Courier New',monospace}
+        #gate.leaving{pointer-events:none;animation:gzoom 1.5s cubic-bezier(.75,0,.9,.2) forwards}
+        @keyframes gzoom{to{transform:scale(9);opacity:0;filter:blur(8px)}}
+        #gate .g-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(circle,#000,transparent 70%);mask-image:radial-gradient(circle,#000,transparent 70%)}
+        #gbg{position:absolute;inset:0;width:100%;height:100%}
+        #gscene{position:absolute;inset:0;width:100%;height:100%;transition:opacity 1.8s ease,transform 2.4s cubic-bezier(.16,1,.3,1)}
+        #gscene.settle{opacity:.2;transform:scale(1.12)}
+        .gdash{stroke-dasharray:1;stroke-dashoffset:1}
+        #gbeam{stroke:#fff;stroke-width:3;animation:gdraw 1s .3s cubic-bezier(.5,0,.2,1) forwards;filter:drop-shadow(0 0 8px #fff)}
+        #ginner{stroke:#fff;stroke-width:2;opacity:.6;animation:gdraw .3s 1.25s linear forwards}
+        .gray{stroke-width:5;stroke-linecap:round;mix-blend-mode:screen;animation:gdraw 1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(1.5s + var(--i)*.09s);filter:drop-shadow(0 0 10px var(--c))}
+        #gprism{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.85);stroke-width:2;opacity:0;animation:gfade .8s .6s forwards;filter:drop-shadow(0 0 18px rgba(160,200,255,.7))}
+        @keyframes gdraw{to{stroke-dashoffset:0}}@keyframes gfade{to{opacity:1}}
+        .g-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 5vw}
+        .g-present{font-size:clamp(9px,1.5vw,12px);letter-spacing:.55em;padding-left:.55em;opacity:0;transform:translateY(14px);animation:grise 1s 2.4s forwards}
+        .g-logo{position:relative;display:flex;margin-top:2vh;font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(44px,12.5vw,180px);line-height:1.05;letter-spacing:.08em}
+        .g-logo span{display:inline-block;opacity:0;color:var(--c);text-shadow:0 0 30px var(--c),0 0 80px color-mix(in srgb,var(--c) 50%,transparent);animation:gletter 1.2s calc(2.8s + var(--i)*.09s) cubic-bezier(.16,1,.3,1) forwards,gbreathe 3.2s calc(4.3s + var(--i)*.15s) ease-in-out infinite}
+        @keyframes gletter{0%{opacity:0;transform:translateY(60px) scale(1.4);filter:blur(24px)}100%{opacity:1;transform:none;filter:blur(0)}}
+        @keyframes gbreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+        .g-scan{position:absolute;top:-10%;bottom:-10%;left:0;width:2px;opacity:0;background:linear-gradient(transparent,#fff,transparent);box-shadow:0 0 24px 6px rgba(255,255,255,.5);animation:gscan 1.4s 4s ease-in-out forwards}
+        @keyframes gscan{0%{left:0;opacity:0}15%,85%{opacity:1}100%{left:100%;opacity:0}}
+        .g-sub{margin-top:2.5vh;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:clamp(15px,2.6vw,26px);letter-spacing:.4em;padding-left:.4em;opacity:0;transform:translateY(14px);animation:grise 1s 4.1s forwards}
+        @keyframes grise{to{opacity:.8;transform:none}}
+        .g-date{margin-top:22px;font-size:clamp(10px,1.5vw,12px);letter-spacing:.5em;padding-left:.5em;opacity:0;transition:opacity 1s .2s}
+        #gate.ready .g-date{opacity:.7}
+        .g-enter{margin-top:30px;padding:15px 40px 15px calc(40px + .5em);border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff;font:inherit;font-size:13px;letter-spacing:.5em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 1s .5s,background .3s,color .3s}
+        #gate.ready .g-enter{opacity:1;pointer-events:auto}
+        .g-enter:hover,.g-enter:focus-visible{background:#fff;color:#000;outline:none}
+        .g-corner{position:absolute;font-size:clamp(8px,1.4vw,11px);letter-spacing:.2em;opacity:0;animation:gcorner 1s 2s forwards}
+        @keyframes gcorner{to{opacity:.4}}
+        .g-tl{top:24px;left:24px}.g-tr{top:24px;right:24px}.g-bl{bottom:56px;left:24px}.g-br{bottom:56px;right:24px}
+        .g-loader{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);width:min(520px,78vw);transition:opacity .6s}
+        #gate.ready .g-loader{opacity:0}
+        .g-track{height:3px;background:rgba(255,255,255,.12)}
+        #gbar{height:100%;width:0;background:linear-gradient(90deg,#8b00ff,#2f4bff,#00d9ff,#00ff88,#ffe600,#ff7a00,#ff0040);background-size:var(--w,100%) 100%;box-shadow:0 0 16px rgba(0,217,255,.7)}
+        #gnm{position:absolute;bottom:14px;font-size:11px;letter-spacing:.15em;transform:translateX(-50%);white-space:nowrap}
+        .g-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+        .g-flash.active{animation:gflash .7s ease-out forwards}
+        @keyframes gflash{0%{opacity:0}12%{opacity:1}30%{opacity:.25}45%{opacity:.7}100%{opacity:0}}
+        @media(max-width:600px){.g-tr,.g-br{display:none}.g-present,.g-sub{letter-spacing:.25em}}
+
+        /* ===== EVENT CAM ===== */
+        .cam-section{position:relative;padding:110px 24px;background:var(--bg-secondary)}
+        .cam-container{max-width:1100px;margin:0 auto}
+        .cam-header{margin-bottom:48px}
+        .cam-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+        .cam-view{position:relative;aspect-ratio:1/1;width:100%;border:1px solid var(--border-hover);background:#000;overflow:hidden;border-radius:4px;box-shadow:var(--glow-shadow)}
+        .cam-view video{width:100%;height:100%;object-fit:cover;display:block}
+        .cam-view video.mirror{transform:scaleX(-1)}
+        .cam-idle{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-family:var(--font-body);letter-spacing:.2em;font-size:13px}
+        .cam-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+        .cam-flash.go{animation:camflash .45s ease-out}
+        @keyframes camflash{0%{opacity:.95}100%{opacity:0}}
+        .cam-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px}
+        .cam-btn{font-family:var(--font-body);font-size:12px;letter-spacing:.15em;padding:12px 18px;border:1px solid var(--border-hover);background:transparent;color:var(--accent-gold);cursor:pointer;transition:var(--transition-smooth)}
+        .cam-btn:hover:not(:disabled){background:var(--accent-gold);color:#020712}
+        .cam-btn:disabled{opacity:.35;cursor:not-allowed}
+        .cam-btn.ghost{color:var(--text-muted);border-color:rgba(255,255,255,.15)}
+        .cam-shutter{flex:none;width:68px;height:68px;border-radius:50%;border:3px solid var(--accent-gold);background:radial-gradient(circle,var(--text-gold-light) 0 55%,transparent 58%);cursor:pointer}
+        .cam-shutter:disabled{opacity:.35;cursor:not-allowed}
+        .cam-shutter:active:not(:disabled){transform:scale(.92)}
+        .cam-status{min-height:20px;margin-top:14px;font-family:var(--font-body);font-size:13px;color:var(--text-muted)}
+        .cam-latest{aspect-ratio:1080/1320;max-width:340px;margin:0 auto;border:1px dashed var(--border-color);display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-family:var(--font-body);font-size:13px;color:var(--text-muted)}
+        .cam-latest.has{border:none;padding:0}
+        .cam-latest img{width:100%;display:block;box-shadow:0 18px 40px rgba(0,0,0,.5);transform:rotate(-2deg)}
+        .cam-thumbs{display:flex;gap:10px;overflow-x:auto;margin:22px 0;padding-bottom:6px}
+        .cam-thumbs img{height:84px;flex:none;cursor:pointer;opacity:.75}
+        .cam-thumbs img:hover{opacity:1}
+        .cam-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+        .cam-latest-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+        .cam-gallery{padding:90px 24px;background:var(--bg-primary)}
+        .cg-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;max-width:1200px;margin:0 auto}
+        .cg-grid figure{aspect-ratio:1080/1320;background:rgba(255,255,255,.04);overflow:hidden;cursor:pointer;box-shadow:0 14px 30px rgba(0,0,0,.45);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+        .cg-grid figure:nth-child(odd){transform:rotate(-1.5deg)}.cg-grid figure:nth-child(even){transform:rotate(1.5deg)}
+        .cg-grid figure:hover{transform:rotate(0) scale(1.04);z-index:2}
+        .cg-grid img{width:100%;height:100%;object-fit:cover;display:block}
+        .cg-msg{grid-column:1/-1;text-align:center;color:var(--text-muted);font-family:var(--font-body);font-size:14px;padding:30px 0}
+        @media(max-width:1000px){.cg-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+        @media(max-width:560px){.cg-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+        @media(max-width:820px){.cam-grid{grid-template-columns:1fr}.cam-section{padding:80px 20px}}
+    </style>
+<style id="glass-theme">
+/* ===== GLASS THEME: translucent panels over soft prismatic light ===== */
+:root{--glass-bg:linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.035));--glass-border:rgba(255,255,255,.17);
+  --glass-blur:blur(18px) saturate(160%);--glass-shadow:0 10px 36px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.28)}
+.orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.orbs i{position:absolute;width:62vmax;height:62vmax;border-radius:50%;will-change:transform;animation:orb 26s ease-in-out infinite alternate}
+.orbs i:nth-child(1){left:-18vmax;top:-20vmax;background:radial-gradient(circle,rgba(56,189,248,.34),transparent 65%)}
+.orbs i:nth-child(2){right:-22vmax;top:8vh;background:radial-gradient(circle,rgba(99,102,241,.36),transparent 65%);animation-duration:32s;animation-delay:-8s}
+.orbs i:nth-child(3){left:12vw;bottom:-32vmax;background:radial-gradient(circle,rgba(168,85,247,.30),transparent 65%);animation-duration:29s;animation-delay:-14s}
+.orbs i:nth-child(4){right:6vw;bottom:-26vmax;width:48vmax;height:48vmax;background:radial-gradient(circle,rgba(236,110,190,.20),transparent 65%);animation-duration:35s;animation-delay:-3s}
+@keyframes orb{from{transform:translate(0,0) scale(1)}to{transform:translate(7vmax,-5vmax) scale(1.18)}}
+
+/* hero + about artwork: drop the old navy box, blend into the glass backdrop */
+.hero-fade-left,.hero-fade-bottom,.about-fade-top,.about-fade-bottom,.about-fade-right,.gallery-carousel::before,.gallery-carousel::after{display:none!important}
+.hero-bg-img,.about-bg-img{filter:hue-rotate(165deg) saturate(.6) brightness(1.08);opacity:.92;
+  -webkit-mask-image:radial-gradient(ellipse 62% 66% at 55% 50%,#000 38%,transparent 78%);mask-image:radial-gradient(ellipse 62% 66% at 55% 50%,#000 38%,transparent 78%)}
+.gallery-carousel{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+
+/* sections go transparent so the light shows through */
+.gallery-section,.expectations-section,.cam-section,.cam-gallery{background:transparent!important}
+
+/* glass surfaces */
+.navbar,.navbar.navbar-scrolled{background:rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid var(--glass-border)}
+.mobile-drawer{background:rgba(14,16,30,.55);backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%)}
+.time-box,.countdown-item:hover .time-box,.gallery-card,.expect-item,.about-content,.lightbox-modal,.cam-view,.cam-latest.has img,.footer-col,.hamburger{
+  background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow)}
+.about-content{padding:clamp(24px,3.5vw,44px);border-radius:22px}
+.expect-item{border-radius:18px;padding:18px 22px}
+.time-box,.gallery-card,.cam-view{border-radius:16px}
+.gallery-card{overflow:hidden}
+.footer{background:rgba(255,255,255,.035);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border-top:1px solid var(--glass-border)}
+.footer-col{border-radius:20px;padding:clamp(20px,3vw,32px);box-shadow:var(--glass-shadow)}
+.expect-icon{background:rgba(255,255,255,.08);border-color:var(--glass-border)}
+.lightbox-overlay{background:rgba(6,7,15,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.lightbox-close{background:rgba(255,255,255,.1);backdrop-filter:blur(10px)}
+.nav-register-btn,.btn-register-hero,.btn-register-hero-pill,.btn-learn-more,.drawer-register-btn,.cam-btn{
+  background:rgba(255,255,255,.07);border:1px solid var(--glass-border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.22);border-radius:999px}
+.cam-btn{padding-left:22px;padding-right:22px}
+.cam-btn.ghost{color:var(--text-muted)}
+.cam-latest{border-radius:14px;border-color:var(--glass-border)}
+.cg-grid figure{border-radius:6px;border:1px solid var(--glass-border)}
+
+/* a restrained cool prism: cyan > indigo > violet > soft rose, used sparingly */
+.hero-title{background:linear-gradient(100deg,#fff 0%,#a5f3fc 24%,#a5b4fc 48%,#e9b8ff 72%,#fff 100%);background-size:220% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent!important;text-shadow:none!important;animation:gshift 9s linear infinite}
+@keyframes gshift{to{background-position:220% 0}}
+.section-tag,.invite-tag{background:linear-gradient(90deg,#a5f3fc,#a5b4fc,#e9b8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head>
+
+<body>
+    <div class="orbs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div id="gate">
+        <div class="g-grid"></div>
+        <canvas id="gbg"></canvas>
+        <svg id="gscene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <line id="gbeam" class="gdash" pathLength="1" x1="0" y1="520" x2="760" y2="410" />
+            <polygon id="gprism" points="800,330 710,490 890,490" />
+            <line id="ginner" class="gdash" pathLength="1" x1="760" y1="410" x2="842" y2="414" />
+            <g id="grays"></g>
+        </svg>
+        <div class="g-content">
+            <div class="g-present">DISHARI PHYSICS ACADEMY PRESENTS</div>
+            <div class="g-logo" id="glogo"><i class="g-scan"></i></div>
+            <div class="g-sub">Beyond the Ordinary</div>
+            <div class="g-date">26 OCTOBER 2026</div>
+            <button class="g-enter" id="genter">ENTER</button>
+        </div>
+        <div class="g-corner g-tl">SPECTRUM // 2026</div>
+        <div class="g-corner g-tr">380 nm – 750 nm</div>
+        <div class="g-corner g-bl">E = hf</div>
+        <div class="g-corner g-br">c = 3 × 10⁸ m/s</div>
+        <div class="g-loader"><div id="gnm">λ 380 nm</div><div class="g-track"><div id="gbar"></div></div></div>
+        <div class="g-flash" id="gflash"></div>
+    </div>
+    <div id="site">
+    <div class="stars-overlay"></div>
+    <div class="celestial-grid"></div>
+
+    <!-- ── Lightbox ── -->
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-modal" id="lightbox-modal">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Close">&#x2715;</button>
+            <img id="lightbox-img" src="" alt="Gallery image">
+        </div>
+    </div>
+
+    <!-- ── Mobile Drawer Overlay ── -->
+    <div class="mobile-drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- ── Mobile Drawer ── -->
+    <nav class="mobile-drawer" id="mobile-drawer">
+        <a href="#home" class="drawer-nav-link" data-drawer-link>HOME</a>
+        <a href="#about" class="drawer-nav-link" data-drawer-link>ABOUT</a>
+        <a href="#what-to-expect" class="drawer-nav-link" data-drawer-link>EXPECT</a>
+        <a href="#event-cam" class="drawer-nav-link" data-drawer-link>EVENT CAM</a>
+        <a href="#gallery" class="drawer-nav-link" data-drawer-link>GALLERY</a>
+
+        <a href="#contact" class="drawer-nav-link" data-drawer-link>SOCIAL</a>
+        <a href="https://dishariphysicsacademy.com/" class="drawer-register-btn" target="_blank">Dishari Physics
+            Academy</a>
+    </nav>
+
+    <!-- ── Navbar ── -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <a href="#home" class="logo" id="nav-logo">SPECTRUM</a>
+            <nav class="nav-menu">
+                <a href="#home" class="nav-link active">HOME</a>
+                <a href="#about" class="nav-link">ABOUT</a>
+                
+                <a href="#what-to-expect" class="nav-link">EXPECT</a>
+                <a href="#event-cam" class="nav-link">EVENT CAM</a>
+                <a href="#gallery" class="nav-link">GALLERY</a>
+                <a href="#contact" class="nav-link">SOCIAL</a>
+            </nav>
+            <a href="https://dishariphysicsacademy.com/" class="nav-register-btn" id="nav-register">Dishari Physics
+                Academy</a>
+            <!-- hamburger (mobile only) -->
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ── Hero ── -->
+    <section class="hero" id="home">
+        <div class="hero-bg-wrapper">
+            <img src="assets/hero-illustration.png" class="hero-bg-img"
+                onerror="this.src='https://placehold.co/1200x800/020916/D4AF37?text=Hero+Illustration'">
+            <div class="hero-fade-left"></div>
+            <div class="hero-fade-bottom"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="invite-tag">YOU ARE INVITED</span>
+                <h1 class="hero-title">SPECTRUM</h1>
+                <span class="hero-subtitle">WHERE PHYSICS MEETS CULTURE</span>
+                <p class="hero-desc">
+                    Every colour begins as light. Join us on 26 October as science, art, and culture split into a full
+                    spectrum of ideas, innovation, and tradition.
+                </p>
+                <div class="countdown" id="countdown-timer">
+                    <div class="countdown-item">
+                        <div class="time-box"><span id="days">00</span></div><span class="label">DAYS</span>
+                    </div>
+                    <div class="countdown-divider"></div>
+                    <div class="countdown-item">
+                        <div class="time-box"><span id="hours">00</span></div><span class="label">HRS</span>
+                    </div>
+                    <div class="countdown-divider"></div>
+                    <div class="countdown-item">
+                        <div class="time-box"><span id="minutes">00</span></div><span class="label">MINS</span>
+                    </div>
+                    <div class="countdown-divider"></div>
+                    <div class="countdown-item">
+                        <div class="time-box"><span id="seconds">00</span></div><span class="label">SECS</span>
+                    </div>
+                </div>
+                <!-- Desktop button -->
+                <a href="https://youtu.be/JaqU66nV_NQ?si=3NbRLTlzZ5k_ntf0" class="btn-register-hero"
+                    target="_blank">WATCH TRAILER <span class="arrow">→</span></a>
+                <!-- Mobile pill button -->
+                <a href="https://youtu.be/JaqU66nV_NQ?si=3NbRLTlzZ5k_ntf0" class="btn-register-hero-pill"
+                    target="_blank">WATCH TRAILER <span class="arrow">→</span></a>
+                <!-- Mobile scroll hint -->
+                <div class="scroll-hint">
+                    <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="18" height="30" rx="9" stroke="rgba(196, 214, 255,0.4)"
+                            stroke-width="1.5" />
+                        <circle cx="10" cy="10" r="2.5" fill="rgba(196, 214, 255,0.6)" />
+                    </svg>
+                    SCROLL TO EXPLORE
+                </div>
+            </div>
+            <div class="hero-spacer"></div>
+        </div>
+    </section>
+
+    <!-- ── About ── -->
+    <section class="about" id="about">
+        <div class="about-bg-wrapper">
+            
+            <img src="assets/constellation-hand.png" class="about-bg-img"
+                onerror="this.src='https://placehold.co/1200x800/020916/D4AF37?text=Pointing+Hand+Sketch'">
+            <div class="about-fade-top"></div>
+            <div class="about-fade-bottom"></div>
+            <div class="about-fade-right"></div>
+        </div>
+        <div class="about-container">
+            <div class="about-spacer"></div>
+            <div class="about-right">
+                <div class="about-content">
+                    <span class="section-tag">ABOUT SPECTRUM</span>
+                    <h2 class="section-title">The Fusion of <br>Physics & Culture</h2>
+                    <p class="section-desc">
+                        SPECTRUM is an interdisciplinary event that brings together the wonders of physics and the
+                        richness of culture. Through talks, exhibitions, and performances, we explore the science behind
+                        our world and the traditions that shape it.
+                    </p>
+                    <a href="https://youtu.be/dZ9512_6jXQ?si=2STe_TrOOOS3GRcm" class="btn-learn-more"
+                        target="_blank">LEARN MORE <span class="arrow">→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ── What to Expect ── -->
+    <section class="expectations-section" id="what-to-expect">
+        <div class="expectations-container">
+            <div class="expectations-left">
+                <span class="section-tag">WHAT TO EXPECT</span>
+                <h2 class="section-title">A Day of Discovery, Connection &amp; Performance</h2>
+            </div>
+            <div class="expectations-list">
+                <div class="expect-item">
+                    <span class="expect-number">01</span>
+                    <div class="expect-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                            <path
+                                d="M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" />
+                        </svg>
+                    </div>
+                    <span class="expect-name">Inspiring Talks</span>
+                </div>
+                <div class="expect-item">
+                    <span class="expect-number">02</span>
+                    <div class="expect-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
+                    </div>
+                    <span class="expect-name">Interactive Exhibits</span>
+                </div>
+                <div class="expect-item">
+                    <span class="expect-number">03</span>
+                    <div class="expect-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13" />
+                            <circle cx="6" cy="18" r="3" />
+                            <circle cx="18" cy="16" r="3" />
+                        </svg>
+                    </div>
+                    <span class="expect-name">Live Performances</span>
+                </div>
+                <div class="expect-item">
+                    <span class="expect-number">04</span>
+                    <div class="expect-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="7" cy="7" r="3" />
+                            <circle cx="17" cy="17" r="3" />
+                            <path d="M10 7h4a3 3 0 0 1 3 3v4M14 17h-4a3 3 0 0 1-3-3v-4" />
+                        </svg>
+                    </div>
+                    <span class="expect-name">Community Meetups</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Event Cam ── -->
+    <section class="cam-section" id="event-cam">
+        <div class="cam-container">
+            <div class="cam-header">
+                <span class="section-tag">EVENT CAM</span>
+                <h2 class="section-title">Strike a Pose, Take It Home</h2>
+                <p class="section-desc">Snap a square photo, get it framed as a polaroid, and download your whole roll as a zip.</p>
+            </div>
+            <div class="cam-grid">
+                <div class="cam-stage">
+                    <div class="cam-view">
+                        <video id="cam-video" playsinline muted autoplay></video>
+                        <div class="cam-idle" id="cam-idle">CAMERA OFF</div>
+                        <div class="cam-flash" id="cam-flash"></div>
+                    </div>
+                    <div class="cam-controls">
+                        <button class="cam-btn" id="cam-start">START CAMERA</button>
+                        <button class="cam-shutter" id="cam-shutter" aria-label="Take photo" disabled></button>
+                        <button class="cam-btn" id="cam-flip" disabled>SWITCH CAMERA</button>
+                    </div>
+                    <p class="cam-status" id="cam-status" role="status"></p>
+                </div>
+                <div class="cam-roll">
+                    <div class="cam-latest" id="cam-latest"><span>Your polaroid appears here</span></div>
+                    <div class="cam-latest-actions">
+                        <button class="cam-btn" id="cam-up" disabled>UPLOAD TO GALLERY</button>
+                        <button class="cam-btn" id="cam-dl" disabled>DOWNLOAD IMAGE</button>
+                    </div>
+                    <div class="cam-thumbs" id="cam-thumbs"></div>
+                    <div class="cam-actions">
+                        <button class="cam-btn" id="cam-zip" disabled>EXPORT .ZIP (<span id="cam-count">0</span>)</button>
+                        <button class="cam-btn ghost" id="cam-clear" disabled>CLEAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Event Cam Gallery ── -->
+    <section class="cam-gallery" id="cam-gallery">
+        <div class="cam-container">
+            <div class="cam-header">
+                <span class="section-tag">EVENT CAM GALLERY</span>
+                <h2 class="section-title">Fresh from the Booth</h2>
+                <p class="section-desc">The latest 10 polaroids uploaded from Event Cam.</p>
+            </div>
+            <div class="cg-grid" id="cg-grid"><p class="cg-msg">Loading polaroids…</p></div>
+        </div>
+    </section>
+
+    <!-- ── Gallery ── -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-section-container">
+            <div class="gallery-header">
+                <span class="section-tag">EVENT HIGHLIGHTS</span>
+                <h2 class="section-title">Moments from Past Edition</h2>
+            </div>
+            <div class="gallery-carousel">
+                <div class="gallery-track" id="gallery-track">
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196fecf0e_FB_IMG_1775588611143.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Presentations'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196fd488b_FB_IMG_1775588592421.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Performances'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196fbd629_FB_IMG_1775588583815.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Exhibits'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f89229_FB_IMG_1775588419565.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Concerts'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f475a8_FB_IMG_1775588373585.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Inspiring+Talks'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f27b9c_FB_IMG_1775588358450.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Culture+Tech'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f09e5b_FB_IMG_1775588330613.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Lab+Exhibits'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ee0ee7_FB_IMG_1775588311793.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Live+Performances'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196e09702_FB_IMG_1775588200255.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Art+Installations'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196e29eb5_FB_IMG_1775588207175.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Night+Experience'">
+                        </div>
+                    </div>
+                    <!-- duplicate for seamless loop -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196fecf0e_FB_IMG_1775588611143.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Presentations'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196fd488b_FB_IMG_1775588592421.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Performances'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196fbd629_FB_IMG_1775588583815.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Exhibits'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f89229_FB_IMG_1775588419565.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Concerts'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f475a8_FB_IMG_1775588373585.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Inspiring+Talks'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f27b9c_FB_IMG_1775588358450.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Culture+Tech'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196f09e5b_FB_IMG_1775588330613.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Lab+Exhibits'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ee0ee7_FB_IMG_1775588311793.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Live+Performances'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196e09702_FB_IMG_1775588200255.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Art+Installations'">
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196e29eb5_FB_IMG_1775588207175.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Night+Experience'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Gallery 2 (Scrolling Right) ── -->
+    <section class="gallery-section" id="gallery-2">
+        <div class="gallery-section-container">
+            <div class="gallery-carousel">
+                <div class="gallery-track scroll-right" id="gallery-track-2">
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196e8a64f_FB_IMG_1775588265913.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+1'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ea4088_FB_IMG_1775588281216.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+2'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ec31e6_FB_IMG_1775588303062.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+3'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196db5a69_FB_IMG_1775588194253.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+4'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ceaefe_FB_IMG_1775588129421.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+5'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196d1a604_FB_IMG_1775588137463.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+6'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196d664d8_FB_IMG_1775588154841.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+7'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196c9bd24_FB_IMG_1775588098214.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+8'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196c4dd27_FB_IMG_1775588079283.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+9'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196c009bb_FB_IMG_1775588073370.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+10'">
+                        </div>
+                    </div>
+                    <!-- duplicate for seamless loop -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196e8a64f_FB_IMG_1775588265913.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+1'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ea4088_FB_IMG_1775588281216.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+2'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ec31e6_FB_IMG_1775588303062.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+3'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196db5a69_FB_IMG_1775588194253.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+4'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ceaefe_FB_IMG_1775588129421.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+5'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196d1a604_FB_IMG_1775588137463.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+6'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196d664d8_FB_IMG_1775588154841.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+7'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196c9bd24_FB_IMG_1775588098214.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+8'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196c4dd27_FB_IMG_1775588079283.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Collection+9'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196c009bb_FB_IMG_1775588073370.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Collection+10'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Gallery 3 (Scrolling Left) ── -->
+    <section class="gallery-section" id="gallery-3">
+        <div class="gallery-section-container">
+            <div class="gallery-carousel">
+                <div class="gallery-track" id="gallery-track-3">
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196bd24f1_FB_IMG_1775588063615.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+1'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196b85fea_FB_IMG_1775588046669.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+2'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196b3087a_FB_IMG_1775588031886.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+3'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196b0ff31_FB_IMG_1775588024885.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+4'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ae350c_FB_IMG_1775587993773.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+5'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196a492d8_FB_IMG_1775587912257.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+6'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196a0703c_FB_IMG_1775587858725.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+7'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196992062_FB_IMG_1775587792610.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+8'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd1969d7fc4_FB_IMG_1775587828396.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+9'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd1969b5839_FB_IMG_1775587815682.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+10'"></div>
+                    </div>
+                    <!-- duplicate for seamless loop -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196bd24f1_FB_IMG_1775588063615.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+1'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196b85fea_FB_IMG_1775588046669.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+2'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196b3087a_FB_IMG_1775588031886.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+3'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196b0ff31_FB_IMG_1775588024885.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+4'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196ae350c_FB_IMG_1775587993773.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+5'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196a492d8_FB_IMG_1775587912257.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+6'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196a0703c_FB_IMG_1775587858725.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+7'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd196992062_FB_IMG_1775587792610.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+8'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd1969d7fc4_FB_IMG_1775587828396.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/020916/D4AF37?text=Behind+9'"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-img-wrap"><img src="https://dishariphysicsacademy.com/backend/uploads/gallery/69dd1969b5839_FB_IMG_1775587815682.jpg.jpeg"
+                                onerror="this.src='https://placehold.co/380x220/030a1a/c5a880?text=Behind+10'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-col footer-about">
+                <div class="footer-header">
+                    <span class="footer-tag">spectrum</span>
+                </div>
+                <p class="footer-desc">Where equations meet expression, and culture collides with curiosity — welcome to
+                    Spectrum. A celebration of minds, motion, music, and the mysteries of the universe.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/dishari.physics.academy_?igsh=MTJudXRwNHpjYndraA=="
+                        target="_blank" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/@Dishari_physics_academy" target="_blank" aria-label="YouTube">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col footer-details">
+                <span class="footer-tag">EVENT DETAILS</span>
+                <div class="details-list">
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        <span>26 October, 2026 — 6:00 PM IST</span>
+                    </div>
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        <span>117 S.N Banarjee Road, M-1 Sukanta Sadan Complex, Barrackpore, Kolkata, West Bengal
+                            700120</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SPECTRUM. All rights reserved.</p>
+        </div>
+    </footer>
+
+    </div><!-- /#site -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ══════════════════════════════════════════════════════
+            //  COUNTDOWN CONFIG — edit these 6 values to reschedule
+            // ══════════════════════════════════════════════════════
+            const EVENT_CONFIG = {
+                year: 2026,
+                month: 10,    // 1 = Jan … 6 = Jun … 12 = Dec
+                day: 26,
+                hour: 18,    // 24-h clock  (18 = 6 PM)
+                minute: 0,
+                second: 0,
+                tzOffsetHours: 5.5   // +5:30 IST
+            };
+            // ══════════════════════════════════════════════════════
+
+            // Build target timestamp
+            // We use UTC then adjust for the event's local timezone
+            const { year, month, day, hour, minute, second, tzOffsetHours } = EVENT_CONFIG;
+            // month is 1-based, Date.UTC uses 0-based months
+            const utcMs = Date.UTC(year, month - 1, day, hour, minute, second)
+                - (tzOffsetHours * 3600 * 1000);
+            const targetMs = utcMs;
+
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minsEl = document.getElementById('minutes');
+            const secsEl = document.getElementById('seconds');
+
+            if (daysEl) {
+                function tick() {
+                    const dist = targetMs - Date.now();
+                    if (dist <= 0) {
+                        daysEl.textContent = hoursEl.textContent = minsEl.textContent = secsEl.textContent = '00';
+                        return;
+                    }
+                    daysEl.textContent = String(Math.floor(dist / 86400000)).padStart(2, '0');
+                    hoursEl.textContent = String(Math.floor((dist % 86400000) / 3600000)).padStart(2, '0');
+                    minsEl.textContent = String(Math.floor((dist % 3600000) / 60000)).padStart(2, '0');
+                    secsEl.textContent = String(Math.floor((dist % 60000) / 1000)).padStart(2, '0');
+                }
+                tick();
+                setInterval(tick, 1000);
+            }
+
+            // ── Navbar scroll ──
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('navbar-scrolled', window.scrollY > 50);
+            });
+
+            // ── Active nav link on scroll ──
+            const sections = document.querySelectorAll('section, footer');
+            const navLinks = document.querySelectorAll('.nav-link');
+            window.addEventListener('scroll', () => {
+                let current = 'home';
+                sections.forEach(s => {
+                    if (s.id && window.scrollY >= s.offsetTop - 150) current = s.id;
+                });
+                navLinks.forEach(l => {
+                    l.classList.remove('active');
+                    if (l.getAttribute('href') === `#${current}`) l.classList.add('active');
+                });
+            });
+
+            // ── Hamburger / Mobile Drawer ──
+            const hamburger = document.getElementById('hamburger');
+            const drawer = document.getElementById('mobile-drawer');
+            const drawerOverlay = document.getElementById('drawer-overlay');
+
+            function openDrawer() {
+                drawer.classList.add('open');
+                drawerOverlay.classList.add('open');
+                hamburger.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeDrawer() {
+                drawer.classList.remove('open');
+                drawerOverlay.classList.remove('open');
+                hamburger.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            hamburger.addEventListener('click', () => {
+                drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+            });
+            drawerOverlay.addEventListener('click', closeDrawer);
+            document.querySelectorAll('[data-drawer-link]').forEach(l => {
+                l.addEventListener('click', closeDrawer);
+            });
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') closeDrawer();
+            });
+
+            // ── Scroll-reveal animations ──
+            const targets = [
+                '.hero-content', '.hero-bg-wrapper',
+                '.about-bg-wrapper', '.about-content',
+                '.expectations-left', '.expect-item',
+                '.gallery-header', '.footer-col'
+            ];
+            targets.forEach(sel => {
+                document.querySelectorAll(sel).forEach((el, i) => {
+                    el.classList.add('fade-in', `delay-${(i % 4) + 1}`);
+                });
+            });
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { e.target.classList.add('appear'); obs.unobserve(e.target); }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            }, 100);
+
+            // ── Gallery Lightbox ──
+            const track = document.getElementById('gallery-track');
+            const track2 = document.getElementById('gallery-track-2');
+            const track3 = document.getElementById('gallery-track-3');
+            const allTracks = [track, track2, track3];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            const pauseScroll = () => allTracks.forEach(t => t.style.animationPlayState = 'paused');
+            const resumeScroll = () => allTracks.forEach(t => t.style.animationPlayState = 'running');
+
+            function openLightbox(src) {
+                lightboxImg.src = src;
+                lightbox.classList.add('active');
+                pauseScroll();
+                document.body.style.overflow = 'hidden';
+            }
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                resumeScroll();
+                document.body.style.overflow = '';
+                setTimeout(() => { lightboxImg.src = ''; }, 300);
+            }
+
+            // Attach click listeners to all gallery tracks
+            allTracks.forEach(t => {
+                t.addEventListener('click', e => {
+                    const card = e.target.closest('.gallery-card');
+                    if (!card) return;
+                    const img = card.querySelector('img');
+                    if (img) openLightbox(img.src);
+                });
+            });
+            closeBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+    /* ===== GATE ===== */
+    (() => {
+        const gate = document.getElementById('gate'), site = document.getElementById('site');
+        const rays = document.getElementById('grays'), logo = document.getElementById('glogo');
+        ['#ff1744', '#ffa800', '#c8ff00', '#00e0a0', '#00a2ff', '#4b4bff', '#8b00ff'].forEach((c, i) => {
+            const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            l.setAttribute('class', 'gray gdash'); l.setAttribute('pathLength', 1);
+            l.setAttribute('x1', 842); l.setAttribute('y1', 414); l.setAttribute('x2', 1600); l.setAttribute('y2', 470 + i * 50);
+            l.setAttribute('stroke', c); l.style.setProperty('--c', c); l.style.setProperty('--i', i); rays.appendChild(l);
+        });
+        const hues = ['#a64dff', '#6a6aff', '#2e9bff', '#00e5e0', '#2dff7a', '#e6ff2e', '#ffa31a', '#ff2d55'];
+        [...'SPECTRUM'].forEach((ch, i) => {
+            const s = document.createElement('span'); s.textContent = ch;
+            s.style.setProperty('--c', hues[i]); s.style.setProperty('--i', i); logo.appendChild(s);
+        });
+        setTimeout(() => document.getElementById('gscene').classList.add('settle'), 2800);
+
+        // physics background
+        const cv = document.getElementById('gbg'), c = cv.getContext('2d'); let W, H;
+        const resize = () => { const d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; c.setTransform(d, 0, 0, d, 0, 0); };
+        resize(); addEventListener('resize', resize);
+        const eqs = ['E = hf', 'λ = c / f', 'E = mc²', '∇×E = −∂B/∂t', '∇·B = 0', 'ΔxΔp ≥ ħ/2', 'iħ ∂ψ/∂t = Ĥψ', 'n₁ sin θ₁ = n₂ sin θ₂', 'v = fλ', 'ω = 2πf', 'e^(iπ) + 1 = 0', '∮B·dl = μ₀I', 'ψ(x,t)', 'p = h/λ'];
+        const fl = eqs.map(s => ({ s, x: Math.random(), y: Math.random(), v: .001 + Math.random() * .0013, size: 11 + Math.random() * 12, h: Math.random() * 360, ph: Math.random() * 6.28 }));
+        const dust = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.6 + .4, v: .0013 + Math.random() * .003, h: Math.random() * 360 }));
+        function frame(ms) {
+            if (!gate.isConnected) return;
+            const t = ms / 1000;
+            c.globalCompositeOperation = 'source-over'; c.fillStyle = 'rgba(5,6,12,.28)'; c.fillRect(0, 0, W, H);
+            c.globalCompositeOperation = 'lighter';
+            for (let k = 0; k < 7; k++) {
+                const y0 = H * (.5 + (k - 3) * .075), A = 26 + k * 4 + 10 * Math.sin(t * .6 + k), f = .006 + k * .0009;
+                c.beginPath();
+                for (let x = 0; x <= W; x += 8) { const y = y0 + A * Math.sin(Math.PI * x / W) * Math.sin(x * f - t * (1.1 + k * .12) + k); x ? c.lineTo(x, y) : c.moveTo(x, y); }
+                c.strokeStyle = `hsla(${275 - k * 45},100%,60%,.32)`; c.lineWidth = 1.4; c.stroke();
+            }
+            const cx = W / 2, cy = H / 2, R = Math.min(W, H) * .4, b = 2 + .5 * Math.sin(t * .15);
+            c.beginPath();
+            for (let i = 0; i <= 700; i++) { const u = i / 700 * 6.2832, x = cx + R * 1.15 * Math.sin(3 * u + t * .3), y = cy + R * Math.sin(b * u); i ? c.lineTo(x, y) : c.moveTo(x, y); }
+            c.strokeStyle = `hsla(${(t * 30) % 360},90%,65%,.16)`; c.lineWidth = 1; c.stroke();
+            for (let k = 0; k < 3; k++) {
+                const rx = R * 1.05, ry = R * .34;
+                c.save(); c.translate(cx, cy); c.rotate(k * Math.PI / 3 + t * .05);
+                c.beginPath(); c.ellipse(0, 0, rx, ry, 0, 0, 6.2832); c.strokeStyle = 'rgba(255,255,255,.07)'; c.stroke();
+                const a = t * (.9 + k * .3) + k * 2;
+                c.beginPath(); c.arc(rx * Math.cos(a), ry * Math.sin(a), 3.2, 0, 6.2832);
+                c.fillStyle = `hsl(${k * 120 + 190},100%,70%)`; c.shadowBlur = 18; c.shadowColor = c.fillStyle; c.fill(); c.restore();
+            }
+            for (const p of dust) {
+                p.y -= p.v; if (p.y < -.05) { p.y = 1.05; p.x = Math.random(); }
+                c.beginPath(); c.arc(p.x * W + Math.sin(t + p.h) * 10, p.y * H, p.r, 0, 6.2832); c.fillStyle = `hsla(${p.h},100%,70%,.5)`; c.fill();
+            }
+            c.globalCompositeOperation = 'source-over';
+            for (const q of fl) {
+                q.y -= q.v * .1; if (q.y < -.1) { q.y = 1.1; q.x = Math.random(); }
+                c.font = `${q.size}px "Space Mono",monospace`;
+                c.fillStyle = `hsla(${q.h},80%,75%,${Math.sin(3.1416 * Math.min(1, Math.max(0, q.y))) * .22})`;
+                c.fillText(q.s, q.x * W + Math.sin(t * .4 + q.ph) * 14, q.y * H);
+            }
+            requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+
+        // loader -> flash -> ENTER button
+        const bar = document.getElementById('gbar'), nm = document.getElementById('gnm'), flash = document.getElementById('gflash');
+        let p = 0;
+        const timer = setInterval(() => {
+            p = Math.min(100, p + Math.random() * 1.4 + .5);
+            bar.style.width = p + '%'; bar.style.setProperty('--w', (10000 / Math.max(p, 1)) + '%');
+            nm.style.left = p + '%'; nm.textContent = 'λ ' + Math.round(380 + p * 3.7) + ' nm';
+            if (p >= 100) {
+                clearInterval(timer);
+                setTimeout(() => { flash.classList.add('active'); setTimeout(() => gate.classList.add('ready'), 300); }, 500);
+            }
+        }, 60);
+
+        // ENTER -> zoom into the website
+        document.getElementById('genter').addEventListener('click', () => {
+            gate.classList.add('leaving');
+            document.documentElement.classList.remove('locked'); window.scrollTo(0, 0);
+            site.classList.add('zoom-in');
+            const done = () => { site.classList.remove('zoom-in'); site.classList.add('entered'); };
+            site.addEventListener('animationend', e => { if (e.target === site) done(); }, { once: true });
+            setTimeout(() => { done(); gate.remove(); }, 1800);
+        });
+    })();
+
+    /* ===== EVENT CAM ===== */
+    (() => {
+        // ImageKit: fill these in. Upload needs a signature from a server (see api/imagekit-auth.js).
+        const IK = { publicKey: 'public_1CEP7P3RP0iEo/TQEt2gg+8OXTc=', authEndpoint: '/api/imagekit-auth', listEndpoint: '/api/imagekit-list', folder: '/spectrum-event-cam' };
+        const $ = id => document.getElementById(id);
+        const video = $('cam-video'), idle = $('cam-idle'), flash = $('cam-flash'), status = $('cam-status'),
+            bStart = $('cam-start'), bShot = $('cam-shutter'), bFlip = $('cam-flip'), bZip = $('cam-zip'), bClear = $('cam-clear'),
+            bUp = $('cam-up'), bDl = $('cam-dl'), latest = $('cam-latest'), thumbs = $('cam-thumbs'), count = $('cam-count');
+        let stream = null, facing = 'user', shots = [], current = null;
+        const say = m => status.textContent = m;
+
+        async function startCam() {
+            if (stream) stream.getTracks().forEach(t => t.stop());
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: facing }, width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false });
+            } catch (e) { say('Camera unavailable. Allow camera access and open the site over https.'); return; }
+            const fm = stream.getVideoTracks()[0].getSettings().facingMode;
+            video.classList.toggle('mirror', fm ? fm === 'user' : true);
+            video.srcObject = stream; idle.style.display = 'none';
+            bShot.disabled = bFlip.disabled = false; bStart.disabled = true; bStart.textContent = 'CAMERA ON'; say('');
+        }
+        bStart.onclick = startCam;
+        bFlip.onclick = () => { facing = facing === 'user' ? 'environment' : 'user'; startCam(); };
+
+        // polaroid frame asset, drawn at 1080x1320
+        function polaroid(photo) {
+            const W = 1080, H = 1320, m = 60, S = 960, o = document.createElement('canvas'); o.width = W; o.height = H;
+            const x = o.getContext('2d'), g = x.createLinearGradient(0, 0, W, H);
+            g.addColorStop(0, '#fbf8f1'); g.addColorStop(1, '#ede6d6'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+            x.drawImage(photo, m, m, S, S);
+            x.strokeStyle = 'rgba(0,0,0,.28)'; x.lineWidth = 4; x.strokeRect(m, m, S, S);
+            x.textAlign = 'center'; x.fillStyle = '#2b2b2b'; x.font = '110px Caveat, cursive'; x.fillText('Spectrum \u201926', W / 2, 1170);
+            x.fillStyle = '#7a7466'; x.font = '28px Manrope, sans-serif'; x.fillText('DISHARI PHYSICS ACADEMY  \u00b7  26.10.2026', W / 2, 1245);
+            return o;
+        }
+
+        async function capture() {
+            if (!stream || !video.videoWidth) return;
+            flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go');
+            const vw = video.videoWidth, vh = video.videoHeight, s = Math.min(vw, vh);
+            const p = document.createElement('canvas'); p.width = p.height = 960; const px = p.getContext('2d');
+            if (video.classList.contains('mirror')) { px.translate(960, 0); px.scale(-1, 1); }
+            px.drawImage(video, (vw - s) / 2, (vh - s) / 2, s, s, 0, 0, 960, 960);
+            try { await document.fonts.load('110px Caveat'); await document.fonts.load('28px Manrope'); } catch (e) { }
+            const blob = await new Promise(r => polaroid(p).toBlob(r, 'image/jpeg', .92));
+            const shot = { blob, name: `spectrum-${String(shots.length + 1).padStart(2, '0')}.jpg`, url: URL.createObjectURL(blob) };
+            shots.push(shot); show(shot); thumb(shot); count.textContent = shots.length; bZip.disabled = bClear.disabled = false;
+            say('Photo ready. Upload it to the gallery or download it.');
+        }
+        bShot.onclick = capture;
+
+        function show(shot) { current = shot; bDl.disabled = false; bUp.disabled = !!shot.remote; bUp.textContent = shot.remote ? 'UPLOADED \u2713' : 'UPLOAD TO GALLERY'; latest.innerHTML = ''; latest.classList.add('has'); const i = new Image(); i.src = shot.url; i.alt = 'Latest polaroid'; latest.appendChild(i); }
+        function thumb(shot) { const i = new Image(); i.src = shot.url; i.alt = shot.name; i.onclick = () => show(shot); thumbs.prepend(i); }
+
+        async function upload(shot) {
+            if (!IK.publicKey || !IK.authEndpoint) { say('ImageKit is not set up yet, so this cannot be uploaded.'); return; }
+            bUp.disabled = true;
+            say('Uploading to ImageKit\u2026');
+            try {
+                const a = await (await fetch(IK.authEndpoint)).json(), f = new FormData();
+                f.append('file', shot.blob, shot.name); f.append('fileName', shot.name); f.append('publicKey', IK.publicKey);
+                f.append('signature', a.signature); f.append('expire', a.expire); f.append('token', a.token);
+                f.append('folder', IK.folder); f.append('useUniqueFileName', 'true');
+                const r = await fetch('https://upload.imagekit.io/api/v1/files/upload', { method: 'POST', body: f });
+                if (!r.ok) throw new Error(r.status);
+                shot.remote = (await r.json()).url; say('Uploaded! It will show in the gallery below.'); if (current === shot) show(shot); window.loadCamGallery && window.loadCamGallery();
+            } catch (e) { say('Upload failed. Your photo is still in the roll, try again.'); bUp.disabled = false; }
+        }
+
+        bUp.onclick = () => current && !current.remote && upload(current);
+        bDl.onclick = () => { if (!current) return; const a = document.createElement('a'); a.href = current.url; a.download = current.name; a.click(); };
+
+        // ----- Event Cam gallery: latest 10 uploads from the cam folder -----
+        const grid = $('cg-grid'), lb = $('lightbox'), lbImg = $('lightbox-img');
+        window.loadCamGallery = async () => {
+            if (!IK.listEndpoint) return;
+            try {
+                const r = await fetch(IK.listEndpoint, { cache: 'no-store' }); if (!r.ok) throw 0;
+                const list = await r.json();
+                grid.innerHTML = '';
+                if (!list.length) { grid.innerHTML = '<p class="cg-msg">No polaroids yet. Be the first to upload one!</p>'; return; }
+                list.slice(0, 10).forEach(f => {
+                    const fig = document.createElement('figure'), i = new Image();
+                    i.loading = 'lazy'; i.alt = 'Event Cam polaroid'; i.src = f.url + (f.url.includes('?') ? '&' : '?') + 'tr=w-540';
+                    fig.onclick = () => { lbImg.src = f.url; lb.classList.add('active'); document.body.style.overflow = 'hidden'; };
+                    fig.appendChild(i); grid.appendChild(fig);
+                });
+            } catch (e) { grid.innerHTML = '<p class="cg-msg">The gallery will appear once uploads are connected.</p>'; }
+        };
+        window.loadCamGallery(); setInterval(window.loadCamGallery, 45000);
+
+        bZip.onclick = async () => {
+            if (!window.JSZip) { say('Zip library did not load. Check your connection and retry.'); return; }
+            const z = new JSZip(); shots.forEach(s => z.file(s.name, s.blob));
+            const a = document.createElement('a'); a.href = URL.createObjectURL(await z.generateAsync({ type: 'blob' }));
+            a.download = 'spectrum-event-cam.zip'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+        };
+        bClear.onclick = () => {
+            shots.forEach(s => URL.revokeObjectURL(s.url)); shots = []; thumbs.innerHTML = '';
+            latest.classList.remove('has'); latest.innerHTML = '<span>Your polaroid appears here</span>';
+            count.textContent = 0; bZip.disabled = bClear.disabled = true; say('');
+        };
+    })();
+    </script>
+</body>
+
+
+</html>
+
