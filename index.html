@@ -1666,14 +1666,26 @@
         /* ===== GATE (intro) ===== */
         html.locked,html.locked body{overflow:hidden;height:100%}
         html{scrollbar-gutter:stable}
-        #site{opacity:0;transform-origin:50% 0}#site.prewarm{opacity:.01;transform:scale(.95);will-change:transform,opacity}#site.entered{opacity:1}
-        #site.zoom-in{animation:szoom 1.1s cubic-bezier(.22,1,.36,1) both;will-change:transform,opacity}
-        @keyframes szoom{from{transform:scale(.95);opacity:0}to{transform:none;opacity:1}}
-        #gate{position:fixed;inset:0;z-index:9999;background:#05060c;color:#fff;overflow:hidden;font-family:'Space Mono','Courier New',monospace}
-        #gate.leaving{pointer-events:none;will-change:transform,opacity;animation:gzoom 1s cubic-bezier(.5,0,.75,.35) forwards}
+        #site{opacity:0;transform-origin:50% 0}#site.prewarm{opacity:.01;transform:scale(.93);will-change:transform,opacity}#site.entered{opacity:1}
+        #site.zoom-in{animation:szoom 1.15s .28s cubic-bezier(.22,1,.36,1) both;will-change:transform,opacity}
+        @keyframes szoom{from{transform:scale(.93);opacity:0}to{transform:none;opacity:1}}
+        #gate.leaving{pointer-events:none;will-change:transform,opacity;animation:gzoom .95s cubic-bezier(.55,0,.8,.3) forwards}
         #gate.leaving *{animation-play-state:paused!important}
-        @keyframes gzoom{from{transform:none;opacity:1}to{transform:scale(1.55);opacity:0}}
-        @media(prefers-reduced-motion:reduce){#gate.leaving,#site.zoom-in{animation-duration:.01s}}
+        @keyframes gzoom{0%{transform:none;opacity:1}60%{opacity:.85}100%{transform:scale(1.4);opacity:0}}
+        /* light bloom that carries the eye from the intro into the site */
+        #burst{position:fixed;left:50%;top:50%;width:130vmax;height:130vmax;margin:-65vmax 0 0 -65vmax;border-radius:50%;z-index:10000;pointer-events:none;opacity:0;transform:scale(0);
+            background:radial-gradient(circle,#fff 0%,rgba(200,240,255,.92) 13%,rgba(150,140,255,.55) 30%,rgba(225,150,255,.24) 46%,transparent 62%)}
+        #burst.go{will-change:transform,opacity;animation:burst 1.25s .12s cubic-bezier(.2,.7,.2,1) forwards}
+        @keyframes burst{0%{transform:scale(0);opacity:0}22%{opacity:1}100%{transform:scale(1);opacity:0}}
+        /* hero content rises in as the bloom fades */
+        #site.stagger .hero-content>*{animation:hrise .95s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(.75s + var(--n,0)*.09s)}
+        #site.stagger .hero-content>:nth-child(1){--n:0}#site.stagger .hero-content>:nth-child(2){--n:1}#site.stagger .hero-content>:nth-child(3){--n:2}
+        #site.stagger .hero-content>:nth-child(4){--n:3}#site.stagger .hero-content>:nth-child(5){--n:4}#site.stagger .hero-content>:nth-child(6){--n:5}
+        #site.stagger .hero-content>:nth-child(n+7){--n:6}
+        #site.stagger .hero-bg-img{animation:himg 2s .3s cubic-bezier(.22,1,.36,1) both}
+        @keyframes hrise{from{opacity:0;transform:translate3d(0,26px,0)}to{opacity:1;transform:none}}
+        @keyframes himg{from{transform:scale(1.08)}to{transform:none}}
+        @media(prefers-reduced-motion:reduce){#burst{display:none}#gate.leaving,#site.zoom-in{animation-duration:.01s;animation-delay:0s}#site.stagger .hero-content>*,#site.stagger .hero-bg-img{animation:none!important}}
         #gate .g-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(circle,#000,transparent 70%);mask-image:radial-gradient(circle,#000,transparent 70%)}
         #gbg{position:absolute;inset:0;width:100%;height:100%}
         #gscene{position:absolute;inset:0;width:100%;height:100%;transition:opacity 1.8s ease,transform 2.4s cubic-bezier(.16,1,.3,1)}
@@ -1798,6 +1810,12 @@
   -webkit-background-clip:text;background-clip:text;color:transparent!important;text-shadow:none!important;animation:gshift 9s linear infinite}
 @keyframes gshift{to{background-position:220% 0}}
 .section-tag,.invite-tag{background:linear-gradient(90deg,#a5f3fc,#a5b4fc,#e9b8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* phones & tablets: show the left part of the artwork, fade only at the bottom */
+@media (max-width:1024px){
+  .hero-bg-img{object-position:left top!important;
+    -webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent 100%);mask-image:linear-gradient(to bottom,#000 62%,transparent 100%);
+    -webkit-mask-composite:source-over;mask-composite:add}
+}
 </style>
 </head>
 
@@ -1826,6 +1844,7 @@
         <div class="g-loader"><div id="gnm">λ 380 nm</div><div class="g-track"><div id="gbar"></div></div></div>
         <div class="g-flash" id="gflash"></div>
     </div>
+    <div id="burst" aria-hidden="true"></div>
     <div id="site">
     <div class="stars-overlay"></div>
     <div class="celestial-grid"></div>
@@ -2649,19 +2668,22 @@
             }
         }, 60);
 
-        // ENTER -> smooth zoom into the website (transform + opacity only, so it stays on the GPU)
+        // ENTER -> light bloom + zoom into the website (transform/opacity only, GPU friendly)
         document.getElementById('genter').addEventListener('click', () => {
             if (entering) return; entering = true; running = false;
+            const burst = document.getElementById('burst');
             window.scrollTo(0, 0);
-            site.classList.remove('prewarm'); site.classList.add('zoom-in'); gate.classList.add('leaving');
+            site.classList.remove('prewarm'); site.classList.add('zoom-in', 'stagger');
+            gate.classList.add('leaving'); burst.classList.add('go');
             let done = false;
             const finish = () => {
                 if (done) return; done = true;
                 site.classList.add('entered'); site.classList.remove('zoom-in');
-                document.documentElement.classList.remove('locked'); gate.remove();
+                document.documentElement.classList.remove('locked'); gate.remove(); burst.remove();
+                setTimeout(() => site.classList.remove('stagger'), 1900);
             };
-            site.addEventListener('animationend', e => { if (e.target === site) finish(); });
-            setTimeout(finish, 1500);
+            site.addEventListener('animationend', e => { if (e.target === site && e.animationName === 'szoom') finish(); });
+            setTimeout(finish, 2000);
         });
     })();
 
@@ -2690,14 +2712,29 @@
         bFlip.onclick = () => { facing = facing === 'user' ? 'environment' : 'user'; startCam(); };
 
         // polaroid frame asset, drawn at 1080x1320
+        // Polaroid background: replace assets/polaroid-bg.jpg with your own image (portrait, about 1080x1320 works best).
+        // If the file is missing, a plain cream paper colour is used. Caption colour adapts to light/dark backgrounds.
+        const POLAROID_BG = 'assets/polaroid-bg.jpg';
+        let bgImg = null;
+        const bgReady = new Promise(res => { const i = new Image(); i.onload = () => { bgImg = i; res(); }; i.onerror = () => res(); i.src = POLAROID_BG; });
+
         function polaroid(photo) {
             const W = 1080, H = 1320, m = 60, S = 960, o = document.createElement('canvas'); o.width = W; o.height = H;
             const x = o.getContext('2d'), g = x.createLinearGradient(0, 0, W, H);
             g.addColorStop(0, '#fbf8f1'); g.addColorStop(1, '#ede6d6'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+            if (bgImg) { // cover-fit the background image
+                const k = Math.max(W / bgImg.naturalWidth, H / bgImg.naturalHeight), bw = bgImg.naturalWidth * k, bh = bgImg.naturalHeight * k;
+                x.drawImage(bgImg, (W - bw) / 2, (H - bh) / 2, bw, bh);
+            }
+            // pick caption colours from the brightness of the caption area
+            let lum = 1;
+            try { const d = x.getImageData(0, 1040, W, 270).data; let t = 0; for (let i = 0; i < d.length; i += 16) t += .2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2]; lum = t / (d.length / 16) / 255; } catch (e) { }
+            const light = lum < .5;
+            x.save(); x.shadowColor = 'rgba(0,0,0,.35)'; x.shadowBlur = 24; x.shadowOffsetY = 8; x.fillStyle = '#000'; x.fillRect(m, m, S, S); x.restore();
             x.drawImage(photo, m, m, S, S);
-            x.strokeStyle = 'rgba(0,0,0,.28)'; x.lineWidth = 4; x.strokeRect(m, m, S, S);
-            x.textAlign = 'center'; x.fillStyle = '#2b2b2b'; x.font = '110px Caveat, cursive'; x.fillText('Spectrum \u201926', W / 2, 1170);
-            x.fillStyle = '#7a7466'; x.font = '28px Manrope, sans-serif'; x.fillText('DISHARI PHYSICS ACADEMY  \u00b7  26.10.2026', W / 2, 1245);
+            x.strokeStyle = light ? 'rgba(255,255,255,.55)' : 'rgba(0,0,0,.28)'; x.lineWidth = 4; x.strokeRect(m, m, S, S);
+            x.textAlign = 'center'; x.fillStyle = light ? '#ffffff' : '#2b2b2b'; x.font = '110px Caveat, cursive'; x.fillText('Spectrum \u201926', W / 2, 1170);
+            x.fillStyle = light ? 'rgba(255,255,255,.78)' : '#6a6455'; x.font = '28px Manrope, sans-serif'; x.fillText('DISHARI PHYSICS ACADEMY  \u00b7  26.10.2026', W / 2, 1245);
             return o;
         }
 
@@ -2709,6 +2746,7 @@
             if (video.classList.contains('mirror')) { px.translate(960, 0); px.scale(-1, 1); }
             px.drawImage(video, (vw - s) / 2, (vh - s) / 2, s, s, 0, 0, 960, 960);
             try { await document.fonts.load('110px Caveat'); await document.fonts.load('28px Manrope'); } catch (e) { }
+            await bgReady;
             const blob = await new Promise(r => polaroid(p).toBlob(r, 'image/jpeg', .92));
             if (current) URL.revokeObjectURL(current.url);
             const shot = { blob, name: `spectrum-${Date.now()}.jpg`, url: URL.createObjectURL(blob) };
